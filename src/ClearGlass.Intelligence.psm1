@@ -22,6 +22,7 @@ function Get-ClearGlassHealthScore {
 }
 
 function New-ClearGlassRecommendation {
+    [Diagnostics.CodeAnalysis.SuppressMessageAttribute('PSUseShouldProcessForStateChangingFunctions','')]
     [CmdletBinding()]
     param(
         [Parameter(Mandatory)][ValidateNotNull()][hashtable]$Evidence,
