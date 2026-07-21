@@ -1,0 +1,32 @@
+{
+  "schemaVersion": 1,
+  "owner": "ClearGlassInc",
+  "founder": "Desmond Otieno Odhiambo",
+  "environment": "production",
+  "intelligence": {
+    "enabled": false,
+    "mode": "advisory",
+    "externalModelAccess": false,
+    "executionAuthorized": false,
+    "allowedRecommendationIds": [
+      "inspect-physical-link",
+      "investigate-packet-loss",
+      "inspect-adapter-errors"
+    ]
+  },
+  "rollout": {
+    "ring": "canary",
+    "maximumRegressionPoints": 5,
+    "automaticRollback": true
+  },
+  "telemetry": {
+    "destination": "local",
+    "includeSecrets": false,
+    "retentionDays": 30
+  },
+  "limits": {
+    "maximumActionsPerRun": 2,
+    "minimumSecondsBetweenRuns": 60,
+    "failureThreshold": 3
+  }
+}
