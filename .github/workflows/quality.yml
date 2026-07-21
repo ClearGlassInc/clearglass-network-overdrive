@@ -1,0 +1,28 @@
+name: quality
+on:
+  push:
+    branches: [main]
+  pull_request:
+permissions:
+  contents: read
+concurrency:
+  group: quality
+  cancel-in-progress: true
+jobs:
+  powershell:
+    runs-on: windows-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install tooling
+        shell: pwsh
+        run: |
+          Set-PSRepository PSGallery -InstallationPolicy Trusted
+          Install-Module Pester -MinimumVersion 5.5.0 -Scope CurrentUser -Force
+          Install-Module PSScriptAnalyzer -Scope CurrentUser -Force
+      - name: Static analysis
+        shell: pwsh
+        run: Invoke-ScriptAnalyzer -Path src -Recurse -Severity Warning,Error -EnableExit
+      - name: Unit tests
+        shell: pwsh
+        run: Invoke-Pester -Path tests -CI -Output Detailed
